@@ -1,0 +1,4 @@
+__pycache__/
+vault/.obsidian/workspace*.json
+vault/.obsidian/cache
+.obsidian/
