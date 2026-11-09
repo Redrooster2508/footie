@@ -22,7 +22,9 @@ from datetime import datetime, timezone
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 SITE = "https://site.api.espn.com/apis/site/v2/sports/soccer/"
-LEAGUES = ["eng.1", "esp.1", "uefa.champions"]
+LEAGUES = ["eng.1", "esp.1", "uefa.champions",
+           # national teams
+           "fifa.friendly", "fifa.world", "uefa.nations", "concacaf.nations.league", "fifa.worldq.uefa", "caf.nations_qual", "caf.nations", "afc.cupq", "afc.asian.cup"]
 UA = "MatchdayHub/1.0 (men's football; https://github.com/Redrooster2508/footie)"
 # match-sheet abbreviations kept per player line, in this order
 STATS = ["G", "A", "SHOT", "SOG", "SV", "GA", "YC", "RC", "FC", "FA", "OG"]

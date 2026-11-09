@@ -2,7 +2,8 @@
    a shots-and-goals chart and the match log. Address: player.html?l=<league slug>&id=<ESPN athlete id> */
 (function () {
   "use strict";
-  var LEAGUE_NAMES = { "eng.1": ["Premier League", "pl"], "esp.1": ["LaLiga", "laliga"], "uefa.champions": ["Champions League", "ucl"] };
+  var LEAGUE_NAMES = { "eng.1": ["Premier League", "pl"], "esp.1": ["LaLiga", "laliga"], "uefa.champions": ["Champions League", "ucl"],
+    "fifa.friendly": ["International friendlies", "friendlies"], "fifa.world": ["FIFA World Cup", "wc"], "uefa.nations": ["UEFA Nations League", "nations"], "concacaf.nations.league": ["Concacaf Nations League", "cnl"], "fifa.worldq.uefa": ["World Cup qualifying (UEFA)", "wcq"], "caf.nations_qual": ["Africa Cup of Nations qualifying", "afconq"], "caf.nations": ["Africa Cup of Nations", "afcon"], "afc.cupq": ["AFC Asian Cup qualifying", "asianq"], "afc.asian.cup": ["AFC Asian Cup", "asian"] };
   var qs = new URLSearchParams(location.search), slug = qs.get("l"), id = qs.get("id");
   function $(x) { return document.getElementById(x); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }

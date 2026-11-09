@@ -2,7 +2,8 @@
    Address: team.html?l=<league slug>&id=<ESPN team id> */
 (function () {
   "use strict";
-  var NAMES = { "eng.1": ["Premier League", "pl"], "esp.1": ["LaLiga", "laliga"], "uefa.champions": ["Champions League", "ucl"] };
+  var NAMES = { "eng.1": ["Premier League", "pl"], "esp.1": ["LaLiga", "laliga"], "uefa.champions": ["Champions League", "ucl"],
+    "fifa.friendly": ["International friendlies", "friendlies"], "fifa.world": ["FIFA World Cup", "wc"], "uefa.nations": ["UEFA Nations League", "nations"], "concacaf.nations.league": ["Concacaf Nations League", "cnl"], "fifa.worldq.uefa": ["World Cup qualifying (UEFA)", "wcq"], "caf.nations_qual": ["Africa Cup of Nations qualifying", "afconq"], "caf.nations": ["Africa Cup of Nations", "afcon"], "afc.cupq": ["AFC Asian Cup qualifying", "asianq"], "afc.asian.cup": ["AFC Asian Cup", "asian"] };
   var SITE = "https://site.api.espn.com/apis/site/v2/sports/soccer/", CORE = "https://site.api.espn.com/apis/v2/sports/soccer/";
   var qs = new URLSearchParams(location.search), slug = qs.get("l"), id = qs.get("id");
   function $(x) { return document.getElementById(x); }

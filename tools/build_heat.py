@@ -29,7 +29,9 @@ from datetime import datetime
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 CORE = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/"
-LEAGUES = ["eng.1", "esp.1", "uefa.champions"]
+LEAGUES = ["eng.1", "esp.1", "uefa.champions",
+           # national teams
+           "fifa.friendly", "fifa.world", "uefa.nations", "concacaf.nations.league", "fifa.worldq.uefa", "caf.nations_qual", "caf.nations", "afc.cupq", "afc.asian.cup"]
 UA = "MatchdayHub/1.0 (men's football; https://github.com/Redrooster2508/footie)"
 GX, GY = 24, 16
 VERSION = 3  # 3: corners and out-of-play passes no longer count as progressive

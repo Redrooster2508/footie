@@ -3,7 +3,7 @@ tags: [home]
 ---
 # Matchday Hub (men's football)
 
-Live scores, probabilities, season forecasts and player stats for the **Premier League**, **LaLiga** and **Champions League**, from ESPN's public feed. A static site on GitHub Pages; the player database is JSON in `data/`, rebuilt every three hours by a GitHub Actions workflow.
+Live scores, probabilities, season forecasts and player stats for the **Premier League**, **LaLiga**, **Champions League** and **national teams**, from ESPN's public feed. A static site on GitHub Pages; the player database is JSON in `data/`, rebuilt every three hours by a GitHub Actions workflow.
 
 Repo: `Redrooster2508/footie`. Live site: https://redrooster2508.github.io/footie/
 

@@ -1,6 +1,6 @@
 # Matchday Hub (men's football)
 
-Live scores, match statistics, win probabilities, season forecasts and player stats for the **Premier League**, **LaLiga** and **Champions League**.
+Live scores, match statistics, win probabilities, season forecasts and player stats for the **Premier League**, **LaLiga**, **Champions League** and **national teams** (friendlies, the 2026 World Cup, UEFA and Concacaf Nations Leagues, World Cup and Africa Cup of Nations qualifying, the Africa Cup of Nations, and the Asian Cup and its qualifiers).
 
 **Live site:** https://redrooster2508.github.io/footie/ (add `#pl`, `#laliga` or `#ucl` to open one competition)
 
@@ -52,7 +52,8 @@ Project notes, decisions and the change log are in the Obsidian vault in [`vault
 3. **Scorelines.** Poisson goals with the Dixon–Coles low-score correction (ρ = −0.08).
 4. **In play.** Only the time left is simulated, on top of the current score, assuming 96 minutes including stoppage time. A red card cuts that side's rate by 25% and raises the opponent's by 15%.
 5. **Season forecasts.** `tools/build_forecast.py` plays out every remaining fixture 10,000 times. Team strength comes from this season's goals, eased toward average by 8 games' worth of league-average form, with home advantage and a per-simulation strength spread (σ = 0.15 on a log scale) to allow for uncertainty.
-6. **Brackets.** Title chances combine each tie's chance to advance through the bracket. A level score after 90 minutes is split by relative strength.
+6. **National teams.** Many internationals have no odds, so teams are rated on goals for and against in every international match this year in the database.
+7. **Brackets.** Title chances combine each tie's chance to advance through the bracket. A level score after 90 minutes is split by relative strength.
 
 "Draw" always means level after 90 minutes.
 
@@ -68,7 +69,7 @@ Project notes, decisions and the change log are in the Obsidian vault in [`vault
 Both only fetch matches they haven't stored yet.
 
 ```sh
-python3 tools/build_players.py              # all three competitions
+python3 tools/build_players.py              # every competition, clubs and national teams
 python3 tools/build_players.py esp.1        # one competition
 python3 tools/build_players.py --rebuild    # read every match again
 python3 tools/build_heat.py                 # season heatmaps (after build_players)

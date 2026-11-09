@@ -8,7 +8,17 @@
       projection: [
         { label: "Straight to the round of 16", from: 1, to: 8, note: "The top eight skip the knockout play-offs." },
         { label: "Knockout play-offs", from: 9, to: 24, note: "9th–16th are seeded against 17th–24th; opponents are decided by the draw." },
-        { label: "Eliminated", from: 25, to: 99, out: true }] }
+        { label: "Eliminated", from: 25, to: 99, out: true }] },
+    // national teams (picked from the "National teams" tab)
+    friendlies: { slug: "fifa.friendly", name: "International friendlies", intl: true },
+    wc: { slug: "fifa.world", name: "FIFA World Cup", intl: true },
+    nations: { slug: "uefa.nations", name: "UEFA Nations League", intl: true },
+    cnl: { slug: "concacaf.nations.league", name: "Concacaf Nations League", intl: true },
+    wcq: { slug: "fifa.worldq.uefa", name: "World Cup qualifying (UEFA)", intl: true },
+    afconq: { slug: "caf.nations_qual", name: "Africa Cup of Nations qualifying", intl: true },
+    afcon: { slug: "caf.nations", name: "Africa Cup of Nations", intl: true },
+    asianq: { slug: "afc.cupq", name: "AFC Asian Cup qualifying", intl: true },
+    asian: { slug: "afc.asian.cup", name: "AFC Asian Cup", intl: true }
   };
   var SITE = "https://site.api.espn.com/apis/site/v2/sports/soccer/";
   var CORE = "https://site.api.espn.com/apis/v2/sports/soccer/";
