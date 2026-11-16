@@ -2,8 +2,17 @@
    a shots-and-goals chart and the match log. Address: player.html?l=<league slug>&id=<ESPN athlete id> */
 (function () {
   "use strict";
-  var LEAGUE_NAMES = { "eng.1": ["Premier League", "pl"], "esp.1": ["LaLiga", "laliga"], "uefa.champions": ["Champions League", "ucl"],
-    "fifa.friendly": ["International friendlies", "friendlies"], "fifa.world": ["FIFA World Cup", "wc"], "uefa.nations": ["UEFA Nations League", "nations"], "concacaf.nations.league": ["Concacaf Nations League", "cnl"], "fifa.worldq.uefa": ["World Cup qualifying (UEFA)", "wcq"], "caf.nations_qual": ["Africa Cup of Nations qualifying", "afconq"], "caf.nations": ["Africa Cup of Nations", "afcon"], "afc.cupq": ["AFC Asian Cup qualifying", "asianq"], "afc.asian.cup": ["AFC Asian Cup", "asian"] };
+  // [name, home page tab, men's]: every competition here is men's
+  var LEAGUE_NAMES = { "eng.1": ["Premier League", "pl", 1], "esp.1": ["LaLiga", "laliga", 1], "uefa.champions": ["Champions League", "ucl", 1],
+    "fifa.friendly": ["International friendlies", "friendlies", 1], "fifa.world": ["FIFA World Cup", "wc", 1], "uefa.nations": ["UEFA Nations League", "nations", 1],
+    "concacaf.nations.league": ["Concacaf Nations League", "cnl", 1], "fifa.worldq.uefa": ["World Cup qualifying (UEFA)", "wcq", 1],
+    "caf.nations_qual": ["Africa Cup of Nations qualifying", "afconq", 1], "caf.nations": ["Africa Cup of Nations", "afcon", 1],
+    "afc.cupq": ["AFC Asian Cup qualifying", "asianq", 1], "afc.asian.cup": ["AFC Asian Cup", "asian", 1] };
+  // short names for the links to a player's other competitions
+  var SHORT = { "fifa.friendly": "Friendlies", "fifa.world": "World Cup", "uefa.nations": "Nations League", "concacaf.nations.league": "Nations League",
+    "caf.nations_qual": "AFCON qualifying", "caf.nations": "AFCON", "afc.cupq": "Asian Cup qualifying", "afc.asian.cup": "Asian Cup",
+    "eng.1": "Premier League", "esp.1": "LaLiga", "uefa.champions": "Champions League" };
+  function short(c) { return SHORT[c] || (/^fifa\.worldq\./.test(c) ? "World Cup qualifying" : LEAGUE_NAMES[c][0]); }
   var qs = new URLSearchParams(location.search), slug = qs.get("l"), id = qs.get("id");
   function $(x) { return document.getElementById(x); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
@@ -17,7 +26,9 @@
 
   if (!slug || !LEAGUE_NAMES[slug] || !/^\d+$/.test(id || "")) { $("pName").textContent = "Player not found"; return; }
   $("pLeague").textContent = LEAGUE_NAMES[slug][0];
-  $("back").href = "./#" + LEAGUE_NAMES[slug][1];
+  var MEN = !!LEAGUE_NAMES[slug][2], her = MEN ? "his" : "her", him = MEN ? "him" : "her", nationalSide = null;
+  $("back").href = LEAGUE_NAMES[slug][1] ? "./#" + LEAGUE_NAMES[slug][1] : "./";
+  if (MEN) $("hH").textContent = "Where he plays";
 
   function line(pos) {
     pos = String(pos || "").toUpperCase();
@@ -38,8 +49,11 @@
     var team = P.teams[p.team] || {};
     document.title = p.name + " · Matchday Hub";
     $("pName").textContent = p.name;
+    comps();
     var club = $("pClub"); if (team.logo) { var im = new Image(); im.src = team.logo; im.alt = ""; club.appendChild(im); }
     var cl = el("a", "pl-link", team.name || ""); cl.href = "team.html?l=" + encodeURIComponent(slug) + "&id=" + encodeURIComponent(p.team); club.appendChild(cl);
+    if (!LEAGUE_NAMES[slug][1]) { $("back").href = cl.href; $("back").textContent = "← " + (team.name || "Team"); }
+    nationalSide = /^(fifa|uefa\.nations|concacaf\.nations|caf\.nations|afc\.)/.test(slug) ? p.team : null;
     $("pInitials").textContent = p.name.split(/\s+/).map(function (w) { return w[0]; }).slice(0, 2).join("");
     $("pSeason").textContent = (P.season || "") + " · " + P.matches + " matches in the database";
     facts([["Position", p.pos === "SUB" ? "" : p.pos], ["Shirt", p.no ? "#" + p.no : ""]]);
@@ -57,6 +71,23 @@
     else if (!Object.keys(H.players || {}).length) $("pHeat").appendChild(el("p", "note", "ESPN's play-by-play for this competition has no pitch positions, so there's no heatmap."));
     else Heat.seasonPanel($("pHeat"), hp, H.grid, function (e, t) { if (e) showTip(e, t); else hideTip(); });
   }).catch(function () { $("pName").textContent = "Player stats for this competition haven't been built yet."; });
+
+  // every competition this player is in (data/index, written by tools/build_players.py), most appearances first
+  function comps() {
+    getJSON("data/index/" + (+id % 20) + ".json").then(function (idx) {
+      var list = (idx[id] || []).filter(function (c) { return LEAGUE_NAMES[c[0]]; });
+      if (list.length < 2) return;
+      var nav = $("pComps");
+      list.forEach(function (c) {
+        var a = el(c[0] === slug ? "span" : "a", "pp-comp");
+        a.appendChild(document.createTextNode(short(c[0]))); a.appendChild(el("b", null, String(c[1])));
+        a.title = LEAGUE_NAMES[c[0]][0] + ": " + c[1] + " apps";
+        if (c[0] === slug) a.setAttribute("aria-current", "page"); else a.href = "player.html?l=" + encodeURIComponent(c[0]) + "&id=" + encodeURIComponent(id);
+        nav.appendChild(a);
+      });
+      nav.hidden = false;
+    }).catch(function () {});
+  }
 
   function facts(list, after) {
     var dl = $("pFacts");
@@ -114,14 +145,15 @@
     });
   }
 
+  // matches.json keeps each player's line as a row: id, team, position, shirt, started, then the stats in M.stats order
   function matchLog(p, M) {
     var S = M.stats, rows = [];
     Object.keys(M.matches).forEach(function (mid) {
-      var m = M.matches[mid], ln = m.players.find(function (x) { return x.id === p.id; });
+      var m = M.matches[mid], ln = m.players.find(function (x) { return x[0] === p.id; });
       if (!ln) return;
-      var s = {}; S.forEach(function (k, i) { s[k] = ln.s[i] || 0; });
-      var home = ln.team === m.home, gf = home ? m.score[0] : m.score[1], ga = home ? m.score[1] : m.score[0];
-      rows.push({ id: mid, date: m.date, home: home, opp: m.teams[home ? m.away : m.home] || {}, gf: gf, ga: ga, res: gf > ga ? "W" : gf < ga ? "L" : "D", start: ln.start, s: s });
+      var s = {}; S.forEach(function (k, i) { s[k] = ln[5 + i] || 0; });
+      var home = ln[1] === m.home, gf = home ? m.score[0] : m.score[1], ga = home ? m.score[1] : m.score[0];
+      rows.push({ id: mid, date: m.date, home: home, opp: M.teams[home ? m.away : m.home] || {}, gf: gf, ga: ga, res: gf > ga ? "W" : gf < ga ? "L" : "D", start: ln[4], s: s });
     });
     return rows.sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
   }
@@ -191,7 +223,9 @@
   // ESPN profile (age, height, nationality), then his Wikidata entry: a freely licensed portrait, birthplace and career.
   function profile(p, team) {
     var photo = $("pPhoto");
-    photo.style.setProperty("--club", "#" + String(team.color || "334455").replace("#", ""));
+    var kit = String(team.color || "334455").replace("#", ""), rgb = /^[0-9a-f]{6}$/i.test(kit) ? parseInt(kit, 16) : 0x334455;
+    photo.style.setProperty("--club", "#" + kit);
+    if ((0.299 * (rgb >> 16) + 0.587 * (rgb >> 8 & 255) + 0.114 * (rgb & 255)) / 255 > 0.72) photo.classList.add("pale");
     var espn = getJSON("https://site.web.api.espn.com/apis/common/v3/sports/soccer/athletes/" + encodeURIComponent(p.id)).then(function (d) {
       var a = d.athlete || {};
       var nat = null;
@@ -201,14 +235,19 @@
         nat.appendChild(document.createTextNode(a.citizenship));
       }
       var dob = dobOf(a.displayDOB);
-      facts([["Position", a.position && a.position.displayName], ["Nationality", nat],
+      // a men's national team player's club, linked to its page when it's in the player database
+      var club = null, ct = a.team;
+      if (MEN && nationalSide && ct && ct.id && String(ct.id) !== nationalSide && /^\d+$/.test(String(ct.id))) {
+        club = el("a", "pl-link", ct.displayName || ct.name || ""); club.href = "team.html?id=" + encodeURIComponent(ct.id);
+      }
+      facts([["Position", a.position && a.position.displayName], ["Club", club], ["Nationality", nat],
         ["Age", a.age ? a.age + (dob ? " (born " + new Date(dob + "T12:00:00").toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" }) + ")" : "") : ""],
         ["Height", height(a.displayHeight)], ["Weight", weight(a.displayWeight)]]);
       return { dob: dob, nat: a.citizenship };
     }).catch(function () { return {}; });
     espn.then(function (a) {
       return entity(p.name, a.dob).then(function (hit) {
-        if (!hit) { careerNote("There's no Wikidata entry for him yet, so no career history."); return; }
+        if (!hit) { careerNote("There's no Wikidata entry for " + him + " yet, so no career history."); return; }
         origin(hit.id, a.nat);
         career(hit.id);
         return portrait(hit, p.name).then(function (img) {
@@ -220,7 +259,7 @@
           var l = el("a", null, img.credit); l.href = img.source; l.target = "_blank"; l.rel = "noopener"; cap.appendChild(l);
         });
       });
-    }).catch(function () { careerNote("Couldn't reach Wikidata for his career history. Try again later."); });
+    }).catch(function () { careerNote("Couldn't reach Wikidata for " + her + " career history. Try again later."); });
   }
   // ESPN writes dates of birth as D/M/YYYY
   function dobOf(txt) {
@@ -238,7 +277,7 @@
   // taller than wide, just him, newest first. Candidates are his main Wikidata image and her Commons category.
   // Older photos are not shown.
   var W = "https://www.wikidata.org/w/api.php?origin=*&format=json&";
-  // His Wikidata item: a male (Q6581097) association football player (Q937857) with this name.
+  // Her Wikidata item: a female (Q6581072) association football player (Q937857) with this name; male (Q6581097) in men's competitions.
   // When ESPN gives a date of birth, a namesake born on another day is skipped.
   function entity(name, dob) {
     return getJSON(W + "action=wbsearchentities&language=en&limit=7&type=item&search=" + encodeURIComponent(name)).then(function (s) {
@@ -248,7 +287,7 @@
         var players = ids.map(function (i) { return e.entities[i]; }).filter(function (en) {
           var c = en && en.claims || {};
           function has(prop, q) { return (c[prop] || []).some(function (x) { var v = x.mainsnak && x.mainsnak.datavalue; return v && v.value && v.value.id === q; }); }
-          return has("P106", "Q937857") && has("P21", "Q6581097");
+          return has("P106", "Q937857") && has("P21", MEN ? "Q6581097" : "Q6581072");
         });
         function born(en) {
           var c = en.claims.P569, v = c && c[0] && c[0].mainsnak.datavalue && c[0].mainsnak.datavalue.value;
@@ -346,7 +385,7 @@
       " BIND(EXISTS { ?team wdt:P31/wdt:P279* wd:Q6979593 } AS ?nat)" +
       ' SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } }').then(function (rows) {
       var seen = {}, spells = rows.filter(function (r) { if (seen[r.st]) return false; seen[r.st] = 1; return true; });
-      if (!spells.length) { careerNote("Wikidata doesn't list his teams yet."); return; }
+      if (!spells.length) { careerNote("Wikidata doesn't list " + her + " teams yet."); return; }
       function yr(t) { return t ? +t.slice(0, 4) : null; }
       spells.forEach(function (r) { r.y0 = yr(r.start); r.y1 = yr(r.end); });
       spells.sort(function (a, b) { return (a.y0 || 9999) - (b.y0 || 9999) || (a.y1 || 9999) - (b.y1 || 9999); });
@@ -354,12 +393,12 @@
       var clubs = spells.filter(function (r) { return r.nat !== "true"; }), intl = spells.filter(function (r) { return r.nat === "true"; });
       if (clubs.length) box.appendChild(careerTable("Clubs", clubs, true));
       if (intl.length) box.appendChild(careerTable("International", intl, false));
-    }).catch(function () { careerNote("Couldn't reach Wikidata for his career history. Try again later."); });
+    }).catch(function () { careerNote("Couldn't reach Wikidata for " + her + " career history. Try again later."); });
   }
-  // "Brazil national under-20 football team" -> "Brazil U20"
+  // "Canada women's national under-20 soccer team" -> "Canada U20"; "Spain national football team" -> "Spain"
   function teamName(t) {
     if (!t || /^Q\d+$/.test(t)) return "Unnamed team";
-    return t.replace(/ (?:men's )?national (?:under-(\d+) )?(?:association )?(?:soccer |football )?team$/i, function (m, u) { return u ? " U" + u : ""; });
+    return t.replace(/ (?:women's |men's )?national (?:under-(\d+) )?(?:association )?(?:soccer |football )?team$/i, function (m, u) { return u ? " U" + u : ""; });
   }
   function careerTable(title, spells, withCountry) {
     var wrap = el("div", "pp-career"), asof = spells.some(function (r) { return r.asof; }), stats = spells.some(function (r) { return r.apps || r.goals; });

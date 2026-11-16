@@ -3,7 +3,16 @@ tags: [log]
 ---
 # Changelog
 
-Newest first. The narrative is in [[Log/2026-11-09]].
+Newest first. The narrative is in [[Log/2026-11-09]] and [[Log/2026-11-13]].
+
+## 2026-11-13 · Improvements from the women's site, new font, team photos (build 3)
+- One page per team, whichever tab it's opened from: Arsenal's shows Premier League, Champions League and cup results and fixtures together, colour-coded and labelled by competition, with a forecast block for each competition and a squad, heatmaps and head to head covering all of them. National teams list fixtures from every competition
+- New font: Archivo throughout, condensed for headings and tabs (replaces Big Shoulders Display and IBM Plex Mono)
+- 32 teams have freely licensed team photos (12 clubs, 20 World Cup teams), reviewed by eye; the rest keep the drawn squad
+- Player pages link to each competition the player is in, with appearances (Saka: Premier League 7, World Cup 7); a national team player's page names his club
+- Phones: the tabs scroll in one row; wide tables show a shadow where there's more to scroll; compact head to head in the match centre; dark initials on pale team colours
+- Match sheets stored as rows with names and teams once per file, heatmap spots as whole numbers: data 16 → 13 MB, identical season totals
+- Fix: the Champions League forecast listed every zone twice (ESPN's own and the ones added for the women's table); now only ESPN's four
 
 ## 2026-11-09 · National teams (build 2)
 - "National teams" tab with a competition picker: friendlies, World Cup 2026, UEFA and Concacaf Nations Leagues, UEFA World Cup play-offs, AFCON and its qualifying, Asian Cup and its qualifying

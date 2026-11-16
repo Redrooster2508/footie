@@ -13,3 +13,4 @@ Started on 2026-11-09 as a copy of the women's site (the Women's Matchday Hub, r
 - [[Decisions]]: choices and why
 - [[Known issues and next steps]]
 - [[Log/2026-11-09]]: how this site was set up
+- [[Log/2026-11-13]]: the women's site's improvements brought over (build 3)

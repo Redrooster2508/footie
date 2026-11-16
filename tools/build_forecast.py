@@ -22,10 +22,9 @@ SIMS = 10000
 HOME, AWAY = 1.12, 0.9
 SHRINK = 8        # games' worth of league-average form mixed into each rating, so early-season form isn't taken at face value
 SPREAD = 0.15     # per-season uncertainty in each team's strength (log scale), so the forecast admits we don't know exactly how good teams are
-# zones that the feed's table notes don't mark; ranks are 1-based and inclusive
-ZONES = {
-    "uefa.champions": [("Straight to the round of 16", 1, 8), ("Knockout play-offs", 9, 24)],
-}
+# zones that the feed's table notes don't mark; ranks are 1-based and inclusive. The men's Champions League table
+# marks its own (round of 16, seeded and unseeded play-offs), so nothing is added.
+ZONES = {}
 LEAGUES = ["eng.1", "esp.1", "uefa.champions"]
 
 
