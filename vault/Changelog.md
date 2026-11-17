@@ -5,6 +5,10 @@ tags: [log]
 
 Newest first. The narrative is in [[Log/2026-11-09]] and [[Log/2026-11-13]].
 
+## 2026-11-17 · Player names in the match heatmap (build 4)
+- Fix: the match centre's touch map could list players as "Player 158678" instead of their names (Caitlin Foord, London City v Arsenal). The names come with the match summary, which often arrives after the play-by-play was asked for, and the map kept the first, empty list of names. It now uses the newest one when the play-by-play arrives
+- While the play-by-play loads, the panel says so instead of briefly saying the match has no pitch positions
+
 ## 2026-11-13 · Improvements from the women's site, new font, team photos (build 3)
 - One page per team, whichever tab it's opened from: Arsenal's shows Premier League, Champions League and cup results and fixtures together, colour-coded and labelled by competition, with a forecast block for each competition and a squad, heatmaps and head to head covering all of them. National teams list fixtures from every competition
 - New font: Archivo throughout, condensed for headings and tabs (replaces Big Shoulders Display and IBM Plex Mono)
