@@ -1,0 +1,277 @@
+{
+ "updated": "2026-11-19",
+ "note": "Who holds each competition's live rights, by region. Researched by hand from the sources listed per competition; check them when a season changes.",
+ "regions": {
+  "GB": "United Kingdom",
+  "IE": "Ireland",
+  "US": "United States",
+  "CA": "Canada",
+  "ES": "Spain",
+  "FR": "France",
+  "DE": "Germany",
+  "AU": "Australia",
+  "CN": "China",
+  "HK": "Hong Kong"
+ },
+ "competitions": {
+  "eng.1": {
+   "name": "Premier League",
+   "season": "2026/27",
+   "official": "https://www.premierleague.com/en/news/3703577",
+   "sources": [
+    "https://www.premierleague.com/en/news/3703577"
+   ],
+   "regions": {
+    "GB": [
+     [
+      "Sky Sports"
+     ],
+     [
+      "TNT Sports"
+     ],
+     [
+      "BBC",
+      "Highlights"
+     ]
+    ],
+    "IE": [
+     [
+      "Sky Sports"
+     ],
+     [
+      "TNT Sports"
+     ],
+     [
+      "Premier Sports"
+     ]
+    ],
+    "US": [
+     [
+      "NBC, USA Network and Peacock"
+     ],
+     [
+      "Telemundo and Universo",
+      "Spanish"
+     ]
+    ],
+    "CA": [
+     [
+      "Fubo"
+     ]
+    ],
+    "ES": [
+     [
+      "DAZN"
+     ]
+    ],
+    "FR": [
+     [
+      "Canal+"
+     ]
+    ],
+    "DE": [
+     [
+      "Sky"
+     ]
+    ],
+    "AU": [
+     [
+      "Stan Sport"
+     ]
+    ],
+    "CN": [
+     [
+      "Migu"
+     ]
+    ],
+    "HK": [
+     [
+      "Now TV (PCCW)"
+     ]
+    ]
+   },
+   "elsewhere": []
+  },
+  "esp.1": {
+   "name": "LaLiga",
+   "season": "2026/27",
+   "official": "https://www.laliga.com/en-GB/operators",
+   "sources": [
+    "https://www.laliga.com/en-GB/operators",
+    "https://www.laliga.com/en-FR/news/disney-and-dazn-become-the-new-home-of-laliga-ea-sports-in-france",
+    "https://www.que.es/2026/07/21/donde-ver-laliga-2026-2027-movistar-dazn/"
+   ],
+   "regions": {
+    "GB": [
+     [
+      "Premier Sports"
+     ],
+     [
+      "Disney+"
+     ]
+    ],
+    "IE": [
+     [
+      "Premier Sports"
+     ],
+     [
+      "Disney+"
+     ]
+    ],
+    "US": [
+     [
+      "ESPN+"
+     ],
+     [
+      "ESPN Deportes",
+      "Spanish"
+     ]
+    ],
+    "CA": [
+     [
+      "TSN"
+     ],
+     [
+      "RDS",
+      "French"
+     ]
+    ],
+    "ES": [
+     [
+      "Movistar Plus+",
+      "Five matches a round, and three whole rounds"
+     ],
+     [
+      "DAZN",
+      "Five matches a round, one of them free"
+     ],
+     [
+      "Teledeporte",
+      "DAZN's free match, each round"
+     ]
+    ],
+    "FR": [
+     [
+      "DAZN"
+     ],
+     [
+      "Disney+"
+     ]
+    ],
+    "DE": [
+     [
+      "DAZN"
+     ]
+    ],
+    "AU": [
+     [
+      "beIN Sports"
+     ]
+    ],
+    "CN": [
+     [
+      "CCTV"
+     ],
+     [
+      "Migu"
+     ]
+    ]
+   },
+   "elsewhere": []
+  },
+  "uefa.champions": {
+   "name": "Champions League",
+   "season": "2026/27",
+   "official": "https://www.uefa.com/uefachampionsleague/news/0253-0d82037aaedd-f371c464f919-1000--where-to-watch-the-champions-league-tv-broadcast-partne/",
+   "sources": [
+    "https://www.uefa.com/uefachampionsleague/news/0253-0d82037aaedd-f371c464f919-1000--where-to-watch-the-champions-league-tv-broadcast-partne/"
+   ],
+   "regions": {
+    "GB": [
+     [
+      "TNT Sports",
+      "Almost every match"
+     ],
+     [
+      "Prime Video",
+      "One Tuesday match each week"
+     ],
+     [
+      "BBC",
+      "Highlights"
+     ]
+    ],
+    "IE": [
+     [
+      "RTÉ"
+     ],
+     [
+      "Premier Sports"
+     ],
+     [
+      "Virgin Media"
+     ]
+    ],
+    "US": [
+     [
+      "Paramount+",
+      "Every match"
+     ],
+     [
+      "TUDN",
+      "Spanish"
+     ],
+     [
+      "DAZN"
+     ]
+    ],
+    "CA": [
+     [
+      "DAZN"
+     ],
+     [
+      "OneSoccer"
+     ]
+    ],
+    "ES": [
+     [
+      "Movistar Plus+"
+     ]
+    ],
+    "FR": [
+     [
+      "Canal+"
+     ]
+    ],
+    "DE": [
+     [
+      "DAZN"
+     ],
+     [
+      "Prime Video"
+     ],
+     [
+      "ZDF",
+      "Highlights"
+     ]
+    ],
+    "AU": [
+     [
+      "Stan Sport"
+     ]
+    ],
+    "CN": [
+     [
+      "iQIYI"
+     ]
+    ],
+    "HK": [
+     [
+      "beIN Sports"
+     ]
+    ]
+   },
+   "elsewhere": []
+  }
+ }
+}
