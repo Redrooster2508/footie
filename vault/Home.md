@@ -11,6 +11,7 @@ Started on 2026-11-09 as a copy of the women's site (the Women's Matchday Hub, r
 
 - [[Changelog]]: every change, by commit
 - [[Decisions]]: choices and why
+- [[Team photos]]: the 32 team photos and how they were found
 - [[Known issues and next steps]]
 - [[Log/2026-11-09]]: how this site was set up
 - [[Log/2026-11-13]]: the women's site's improvements brought over (build 3)

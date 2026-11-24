@@ -5,6 +5,9 @@ tags: [log]
 
 Newest first. The narrative is in [[Log/2026-11-09]] and [[Log/2026-11-13]].
 
+## 2026-11-23 · Team photo search moved here
+- `tools/photo_candidates.py`, which found this site's 32 team photos, now lives in this repository (it was in the women's repo as `men_photo_candidates.py`); notes in [[Team photos]]
+
 ## 2026-11-19 · Where to watch (build 5)
 - The match centre has a "Where to watch" panel for the selected match: the competition's broadcasters in your region, guessed from your time zone and changeable (United Kingdom, Ireland, United States, Canada, Spain, France, Germany, Australia, China, Hong Kong or elsewhere)
 - In the United States it also shows the channels ESPN lists for that match (for example CBS and Paramount+ for the NWSL final)
